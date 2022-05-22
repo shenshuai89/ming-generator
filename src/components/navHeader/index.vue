@@ -12,7 +12,7 @@
         </a>
       </div>
       <div style="margin-left: 5px">
-        <el-button type="primary" size="small" @click="downloadTemplate"
+        <el-button type="primary" size="small"
           >下载项目模板</el-button
         >
       </div>

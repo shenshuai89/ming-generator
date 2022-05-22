@@ -4,16 +4,14 @@
       <nav-header></nav-header>
     </div>
     <div class="content">
-      <div class="edit">
-        <div class="left">
-          <nav-left></nav-left>
-        </div>
-        <div class="main">
-          <nav-main></nav-main>
-        </div>
-        <div class="right">
-          <nav-right></nav-right>
-        </div>
+      <div class="left">
+        <nav-left></nav-left>
+      </div>
+      <div class="main">
+        <nav-main></nav-main>
+      </div>
+      <div class="right">
+        <nav-right></nav-right>
       </div>
     </div>
   </div>
@@ -25,4 +23,15 @@ import navLeft from "../components/navLeft/index.vue";
 import navMain from "../components/navMain/index.vue";
 import navRight from "../components/navRight/index.vue";
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.content {
+  display: flex;
+  height: calc(100vh - 51px);
+  .main {
+    flex: 1;
+  }
+  .right {
+    width: 300px;
+  }
+}
+</style>

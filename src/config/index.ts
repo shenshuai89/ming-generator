@@ -31,7 +31,7 @@ export const baseComponent: ComponentItem[] = [
     label: "图标",
     icon: "CollectionTag",
     attrs: {
-      name: "info-o",
+      name: "edit",
       color: "inherit",
       company: "px",
       size: "20",
