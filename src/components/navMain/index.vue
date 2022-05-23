@@ -1,17 +1,17 @@
 <template>
   <div class="main">
-    <div
-      class="editor"
-      :style="{ width: width + 'px', height: height + 'px' }"
-      @drop="drop"
-      @dragover="dragover"
-    >
+    <div class="editor" @drop="drop" @dragover="dragover">
       <div ref="editorItem" v-if="componentList && componentList.length">
         <div v-for="item in componentList" :key="item">
-          <div class="item">
-            <component :is="`el-${item.type}`">
+          <div class="item" @click="clickItem(item, index)">
+            <component
+              :is="`el-${item.type}`"
+              v-bind="{
+                ...item.attrs,
+              }"
+            >
               <template v-if="item.type === 'button'">
-                {{ item.attrs.text }}</template
+                {{ item.attrs.btntext }}</template
               >
               <template v-else-if="item.type === 'icon'">
                 <component :is="`${item.attrs.name}`"></component>
@@ -35,10 +35,6 @@ let componentList: ComputedRef<ComponentItem[]> = computed(
 );
 let currentComponent = computed(() => store.state.currentComponent);
 let activeIndex = computed(() => store.state.activeIndex);
-let width = ref<number>(375);
-let inputWidth = ref<number>(375);
-let height = ref<number>(667);
-let inputHeight = ref<number>(667);
 
 let dragover = (e: DragEvent) => {
   e.preventDefault();
@@ -64,9 +60,31 @@ let drop = (e: DragEvent) => {
   }
 };
 
-const clickItem = (item, index) => {
-  console.log(item, index);
+const clickItem = (item: ComponentItem, index: number) => {
+  localStorage.setItem("currentComponent", JSON.stringify(item));
+  store.commit("setCurrentComponent", item);
+  localStorage.setItem("activeIndex", String(index));
+  store.commit("setActiveIndex", index);
 };
+watch(
+  () => currentComponent.value,
+  (val) => {
+    localStorage.setItem("currentComponent", JSON.stringify(val));
+    store.commit("setCurrentComponent", val);
+    console.log(val, "setCurrentComponent");
+    if (componentList.value && componentList.value.length) {
+      console.log(componentList.value, "setCurrentComponent");
+
+      componentList.value[activeIndex.value] = val;
+      localStorage.setItem(
+        "componentList",
+        JSON.stringify(componentList.value)
+      );
+      store.commit("setComponentList", componentList.value);
+    }
+  },
+  { deep: true }
+);
 </script>
 <style lang="scss" scoped>
 .main {
@@ -74,5 +92,9 @@ const clickItem = (item, index) => {
   height: 100%;
   background: #f5f5f5;
   position: relative;
+  .editor {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

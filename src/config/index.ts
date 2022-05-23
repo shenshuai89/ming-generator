@@ -6,7 +6,7 @@ export const baseComponent: ComponentItem[] = [
     label: "按钮",
     icon: "Coin",
     attrs: {
-      text: "按钮",
+      btntext: "按钮",
       type: "default",
       size: "normal",
       square: false,

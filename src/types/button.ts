@@ -13,7 +13,7 @@ export interface ButtonAttrs {
   loading?: boolean,
   hairline?: boolean,
   icon?: string,
-  text?: string,
+  btntext?: string,
   iconPosition?: 'left' | 'right',
   loadingText?: string,
   loadingType?: 'circular' | 'spinner',

@@ -27,6 +27,7 @@ import navRight from "../components/navRight/index.vue";
 .content {
   display: flex;
   height: calc(100vh - 51px);
+  overflow: hidden;
   .main {
     flex: 1;
   }
