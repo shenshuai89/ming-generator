@@ -1,24 +1,32 @@
 <template>
   <div class="main">
-    <div class="editor" @drop="drop" @dragover="dragover">
+    <div class="editor" @drop="drop" @dragover="dragover" @click="clickEditor">
       <div ref="editorItem" v-if="componentList && componentList.length">
         <div v-for="item in componentList" :key="item">
-          <div class="item" @click="clickItem(item, index)">
-            <component
-              :is="`el-${item.type}`"
-              v-bind="{
-                ...item.attrs,
-              }"
-            >
-              <template v-if="item.type === 'button'">
-                {{ item.attrs.btntext }}</template
+          <el-dropdown trigger="contextmenu" @command="handleCommand">
+            <div class="item" @click="clickItem(item, index)">
+              <component
+                :is="`el-${item.type}`"
+                v-bind="{
+                  ...item.attrs,
+                }"
               >
-              <template v-else-if="item.type === 'icon'">
-                <component :is="`${item.attrs.name}`"></component>
-              </template>
-              <template v-else>{{ item.type }}</template>
-            </component>
-          </div>
+                <template v-if="item.type === 'button'">
+                  {{ item.attrs.btntext }}</template
+                >
+                <template v-else-if="item.type === 'icon'">
+                  <component :is="`${item.attrs.name}`"></component>
+                </template>
+                <template v-else>{{ item.type }}</template>
+              </component>
+            </div>
+            <template #dropdown>
+              <el-dropdown-menu @click="contextMenuClick">
+                <el-dropdown-item command="copy">复制</el-dropdown-item>
+                <el-dropdown-item command="deleteItem">删除</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </div>
       </div>
     </div>
@@ -26,10 +34,12 @@
 </template>
 
 <script setup lang="ts">
+import { ElMessage } from "element-plus";
 import { computed, ComputedRef, watch, ref } from "vue";
 import { useStore } from "vuex";
 import { ComponentItem } from "../../types/index";
 let store = useStore();
+let editorItem = ref<HTMLDivElement | null>(null);
 let componentList: ComputedRef<ComponentItem[]> = computed(
   () => store.state.componentList
 );
@@ -66,6 +76,74 @@ const clickItem = (item: ComponentItem, index: number) => {
   localStorage.setItem("activeIndex", String(index));
   store.commit("setActiveIndex", index);
 };
+
+let clickEditor = (e: any) => {
+  if (!editorItem.value!.contains(e.target)) {
+    store.commit("setActiveIndex", null);
+    localStorage.removeItem("activeIndex");
+    store.commit("setCurrentComponent", null);
+    localStorage.removeItem("currentComponent");
+  }
+};
+
+const handleCommand = (command: string | number | object) => {
+  if (command === "copy") {
+    copy(currentComponent.value);
+  } else if (command === "deleteItem") {
+    deleteItem(activeIndex.value);
+  }
+};
+let copy = (item: ComponentItem) => {
+  if (!currentComponent.value) {
+    ElMessage.warning("请先选择组件");
+    return;
+  } else {
+    componentList.value.push(item);
+    localStorage.setItem("currentComponent", JSON.stringify(item));
+    store.commit("setCurrentComponent", item);
+    localStorage.setItem("componentList", JSON.stringify(componentList.value));
+    store.commit("setComponentList", componentList.value);
+    localStorage.setItem("activeIndex", String(componentList.value.length - 1));
+    store.commit("setActiveIndex", componentList.value.length - 1);
+  }
+};
+
+let deleteItem = (index: number) => {
+  if (!currentComponent.value) {
+    ElMessage.warning("请先选择组件");
+    return;
+  } else {
+    if (componentList.value.length !== 1) {
+      componentList.value.splice(index, 1);
+      localStorage.setItem(
+        "currentComponent",
+        JSON.stringify(componentList.value[componentList.value.length - 1])
+      );
+      store.commit(
+        "setCurrentComponent",
+        componentList.value[componentList.value.length - 1]
+      );
+      localStorage.setItem(
+        "componentList",
+        JSON.stringify(componentList.value)
+      );
+      store.commit("setComponentList", componentList.value);
+      localStorage.setItem(
+        "activeIndex",
+        String(componentList.value.length - 1)
+      );
+      store.commit("setActiveIndex", componentList.value.length - 1);
+    } else {
+      store.commit("setComponentList", null);
+      store.commit("setCurrentComponent", null);
+      store.commit("setActiveIndex", null);
+      localStorage.removeItem("componentList");
+      localStorage.removeItem("currentComponent");
+      localStorage.removeItem("activeIndex");
+    }
+  }
+};
+
 watch(
   () => currentComponent.value,
   (val) => {

@@ -7,11 +7,11 @@
         <button-attrs v-if="current.type === 'button'"></button-attrs>
       </div>
       <div v-else>
-        <a-result
+        <el-result
           status="404"
           title="还没有数据喔"
           sub-title="赶快拖拽组件来生成你的H5页面吧"
-        ></a-result>
+        ></el-result>
       </div>
     </div>
   </div>

@@ -33,7 +33,7 @@
       </el-form-item>
       <el-form-item label="按钮尺寸">
         <el-select v-model="current.attrs.size">
-          <el-option value="normal">正常</el-option>
+          <el-option value="default">正常</el-option>
           <el-option value="large">大号</el-option>
           <el-option value="small">小号</el-option>
         </el-select>
@@ -68,8 +68,8 @@
       </el-form-item>
       <el-form-item label="加载图标" v-if="current.attrs.loading">
         <el-select v-model:value="current.attrs.loadingType">
-          <el-select-option value="circular">圆圈</el-select-option>
-          <el-select-option value="spinner">花朵</el-select-option>
+          <el-option value="circular">圆圈</el-option>
+          <el-option value="spinner">花朵</el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="跳转链接">

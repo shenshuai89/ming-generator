@@ -3,7 +3,7 @@ import { CSSProperties } from 'vue'
 export interface ButtonAttrs {
   style?: CSSProperties,
   type?: 'default' | 'primary' | 'warning' | 'danger' | 'success',
-  size?: 'normal' | 'small' | 'large' | 'mini',
+  size?: 'default' | 'small' | 'large',
   color?: string,
   plain?: boolean,
   disabled?: boolean,

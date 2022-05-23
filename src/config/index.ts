@@ -8,7 +8,7 @@ export const baseComponent: ComponentItem[] = [
     attrs: {
       btntext: "按钮",
       type: "default",
-      size: "normal",
+      size: "default",
       square: false,
       round: false,
       hairline: false,
