@@ -4,14 +4,13 @@ export const baseComponent: ComponentItem[] = [
   {
     type: "button",
     label: "按钮",
-    icon: "Coin",
+    icon: "edit",
     attrs: {
       btntext: "按钮",
       type: "default",
       size: "default",
-      square: false,
+      circle: false,
       round: false,
-      hairline: false,
       color: "",
       plain: false,
       disabled: false,

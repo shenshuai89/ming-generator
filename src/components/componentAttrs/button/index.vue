@@ -23,12 +23,9 @@
           placeholder="请输入按钮图标"
           clearable
         ></el-input>
-        <el-button
-          style="margin-top: 20px"
-          type="primary"
-          @click="clickBtn('icon')"
-          size="small"
-          >选择图标</el-button
+        例如： edit、Apple
+        <m-choose-icon title="图标列表" v-model:visible="iconChooseVisible"
+          >选择图标</m-choose-icon
         >
       </el-form-item>
       <el-form-item label="按钮尺寸">
@@ -44,50 +41,47 @@
       <el-form-item label="朴素按钮">
         <el-switch v-model="current.attrs.plain"></el-switch>
       </el-form-item>
-      <el-form-item label="圆形按钮">
+      <el-form-item label="圆角按钮">
         <el-switch v-model="current.attrs.round"></el-switch>
       </el-form-item>
-      <el-form-item label="方形按钮">
-        <el-switch v-model:checked="current.attrs.square"></el-switch>
+      <el-form-item label="圆形按钮">
+        <el-switch v-model="current.attrs.circle"></el-switch>
       </el-form-item>
       <el-form-item label="是否禁用">
-        <el-switch v-model:checked="current.attrs.disabled"></el-switch>
-      </el-form-item>
-      <el-form-item label="0.5px边框">
-        <el-switch v-model:checked="current.attrs.hairline"></el-switch>
+        <el-switch v-model="current.attrs.disabled"></el-switch>
       </el-form-item>
       <el-form-item label="加载状态">
-        <el-switch v-model:checked="current.attrs.loading"></el-switch>
+        <el-switch v-model="current.attrs.loading"></el-switch>
       </el-form-item>
       <el-form-item label="加载文案" v-if="current.attrs.loading">
         <el-input
-          v-model:value="current.attrs.loadingText"
+          v-model="current.attrs.loadingText"
           placeholder="请输入按钮文案"
-          allowClear
+          clearable
         ></el-input>
       </el-form-item>
       <el-form-item label="加载图标" v-if="current.attrs.loading">
-        <el-select v-model:value="current.attrs.loadingType">
+        <el-select v-model:loadingType="current.attrs.loadingType">
           <el-option value="circular">圆圈</el-option>
           <el-option value="spinner">花朵</el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="跳转链接">
         <el-input
-          v-model:value="current.attrs.url"
+          v-model="current.attrs.url"
           placeholder="请输入跳转链接"
-          allowClear
+          clearable
         ></el-input>
       </el-form-item>
       <el-form-item label="路由路径">
         <el-input
-          v-model:value="current.attrs.to"
+          v-model="current.attrs.to"
           placeholder="请输入路由路径"
-          allowClear
+          clearable
         ></el-input>
       </el-form-item>
       <el-form-item label="替换页面">
-        <el-switch v-model:checked="current.attrs.replace"></el-switch>
+        <el-switch v-model="current.attrs.replace"></el-switch>
       </el-form-item>
     </el-form>
   </div>
@@ -106,6 +100,7 @@ let labelCol = { span: 6 };
 let wrapperCol = { span: 16 };
 let visible = ref<boolean>(false);
 let position = ref<string>("");
+let iconChooseVisible = ref<boolean>(false);
 
 let clickBtn = (val: string) => {
   position.value = val;

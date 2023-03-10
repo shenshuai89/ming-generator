@@ -912,6 +912,15 @@ memoize-one@^6.0.0:
   resolved "https://registry.npmmirror.com/memoize-one/-/memoize-one-6.0.0.tgz#b2591b871ed82948aee4727dc6abceeeac8c1045"
   integrity sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw==
 
+ming-pro@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ming-pro/-/ming-pro-1.0.2.tgz#7bd6fc67d49528d19a410697aa9486a8f2763d7c"
+  integrity sha512-GqC7gj4fQoNV+q2lIkWb6KsR2vm66hA7I+zxS40hY2cZ1KPzbU+vq40Aa74toEOubrq2uNe29qX/wK4ar+iQww==
+  dependencies:
+    "@element-plus/icons-vue" "^1.1.4"
+    element-plus "2.0.0"
+    vue "^3.2.25"
+
 ms@2.1.2:
   version "2.1.2"
   resolved "https://registry.npmmirror.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"

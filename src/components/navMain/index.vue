@@ -12,8 +12,8 @@
                 }"
               >
                 <template v-if="item.type === 'button'">
-                  {{ item.attrs.btntext }}</template
-                >
+                  {{ item.attrs.btntext }}
+                </template>
                 <template v-else-if="item.type === 'icon'">
                   <component :is="`${item.attrs.name}`"></component>
                 </template>
